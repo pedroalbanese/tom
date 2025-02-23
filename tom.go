@@ -20,6 +20,7 @@ var (
 
 var p256 *elliptic.CurveParams
 var p384 *elliptic.CurveParams
+var p521 *elliptic.CurveParams
 
 // sync.Once variable to ensure initialization occurs only once
 var initonce sync.Once
