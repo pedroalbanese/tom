@@ -15,6 +15,7 @@ var (
 
 	oidTom256 = asn1.ObjectIdentifier{1, 2, 999, 1, 1, 1, 1}
 	oidTom384 = asn1.ObjectIdentifier{1, 2, 999, 1, 1, 1, 2}
+	oidTom384 = asn1.ObjectIdentifier{1, 2, 999, 1, 1, 1, 3}
 )
 
 var p256 *elliptic.CurveParams
@@ -27,6 +28,7 @@ var initonce sync.Once
 func init() {
 	initP256()
 	initP384()
+	initP521()
 }
 
 // Function to initialize curve P256
@@ -63,6 +65,24 @@ func initP384() {
 func P384() elliptic.Curve {
 	initonce.Do(initP384)
 	return p384
+}
+
+// Function to initialize curve P384
+func initP521() {
+	p521 = new(elliptic.CurveParams)
+	p521.P, _ = new(big.Int).SetString("200000000000000000000000000000000000000000000000000000000000000002c54be78524c33584f734a266748b2063accf5028e6778dc5056476d0690853249", 16)
+	p521.N, _ = new(big.Int).SetString("01ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", 16)
+	p521.B, _ = new(big.Int).SetString("3cbc65d1e0245d79703b18e9aaea1ac6d67f87a2cd4bd84b9e6df6a45a979c481825ca5a857270fc890352f9fac7fd6020deaabb28d099718f0f77a4eec222871d", 16)
+	p521.Gx, _ = new(big.Int).SetString("1", 16)
+	p521.Gy, _ = new(big.Int).SetString("460445824ae9715345c16334b3280c75ded69c90b8417b75fc1f88e1e09fa1c179b3cff0f2f4297f0530ef6ed6ae605ee7a575ef72575b1282fd1fb8b00120ba01", 16)
+	p521.Name = "Tom-521"
+	p384.BitSize = 384
+}
+
+// Function to return the P384 curve, using the initialization done in init
+func P521() elliptic.Curve {
+	initonce.Do(initP521)
+	return p521
 }
 
 // Structures to represent public and private keys
@@ -132,6 +152,8 @@ func (pk *PublicKey) MarshalPKCS8PublicKey(curve elliptic.Curve) ([]byte, error)
 		oid = oidTom256
 	case P384():
 		oid = oidTom384
+	case P521():
+		oid = oidTom521
 	default:
 		return nil, errors.New("unsupported curve")
 	}
@@ -174,6 +196,8 @@ func ParsePublicKey(der []byte) (*PublicKey, error) {
 		curve = P256()
 	case publicKeyInfo.Algorithm.Algorithm.Equal(oidTom384):
 		curve = P384()
+	case publicKeyInfo.Algorithm.Algorithm.Equal(oidTom521):
+		curve = P521()
 	default:
 		return nil, errors.New("unsupported curve OID")
 	}
@@ -214,6 +238,8 @@ func (pk *PrivateKey) MarshalPKCS8PrivateKey(curve elliptic.Curve) ([]byte, erro
 		oid = oidTom256
 	case P384():
 		oid = oidTom384
+	case P521():
+		oid = oidTom521
 	default:
 		return nil, errors.New("unsupported curve")
 	}
@@ -274,6 +300,8 @@ func ParsePrivateKey(der []byte) (*PrivateKey, error) {
 		curve = P256()
 	case privateKeyInfo.PrivateKeyAlgorithm.Algorithm.Equal(oidTom384):
 		curve = P384()
+	case privateKeyInfo.PrivateKeyAlgorithm.Algorithm.Equal(oidTom521):
+		curve = P521()
 	default:
 		return nil, errors.New("unsupported curve OID")
 	}
