@@ -15,7 +15,7 @@ var (
 
 	oidTom256 = asn1.ObjectIdentifier{1, 2, 999, 1, 1, 1, 1}
 	oidTom384 = asn1.ObjectIdentifier{1, 2, 999, 1, 1, 1, 2}
-	oidTom384 = asn1.ObjectIdentifier{1, 2, 999, 1, 1, 1, 3}
+	oidTom521 = asn1.ObjectIdentifier{1, 2, 999, 1, 1, 1, 3}
 )
 
 var p256 *elliptic.CurveParams
