@@ -71,14 +71,14 @@ func P384() elliptic.Curve {
 
 // Function to initialize curve P521
 func initP521() {
-	p384 = new(elliptic.CurveParams)
-	p384.P, _ = new(big.Int).SetString("200000000000000000000000000000000000000000000000000000000000000002c54be78524c33584f734a266748b2063accf5028e6778dc5056476d0690853249", 16)
-	p384.N, _ = new(big.Int).SetString("01ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", 16)
-	p384.B, _ = new(big.Int).SetString("3cbc65d1e0245d79703b18e9aaea1ac6d67f87a2cd4bd84b9e6df6a45a979c481825ca5a857270fc890352f9fac7fd6020deaabb28d099718f0f77a4eec222871d", 16)
-	p384.Gx, _ = new(big.Int).SetString("01", 16)
-	p384.Gy, _ = new(big.Int).SetString("ef6432c21701cc48c63fb9263e14ba76d4a94ba14d173b134e3032b0e2e543180eb6725125992a7d00162a5f57d21918b0766364eeb53c53bb12f405dac1d527e2", 16)
-	p384.Name = "Tom-521"
-	p384.BitSize = 521
+	p521 = new(elliptic.CurveParams)
+	p521.P, _ = new(big.Int).SetString("200000000000000000000000000000000000000000000000000000000000000002c54be78524c33584f734a266748b2063accf5028e6778dc5056476d0690853249", 16)
+	p521.N, _ = new(big.Int).SetString("01ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", 16)
+	p521.B, _ = new(big.Int).SetString("3cbc65d1e0245d79703b18e9aaea1ac6d67f87a2cd4bd84b9e6df6a45a979c481825ca5a857270fc890352f9fac7fd6020deaabb28d099718f0f77a4eec222871d", 16)
+	p521.Gx, _ = new(big.Int).SetString("01", 16)
+	p521.Gy, _ = new(big.Int).SetString("ef6432c21701cc48c63fb9263e14ba76d4a94ba14d173b134e3032b0e2e543180eb6725125992a7d00162a5f57d21918b0766364eeb53c53bb12f405dac1d527e2", 16)
+	p521.Name = "Tom-521"
+	p521.BitSize = 521
 }
 
 // Function to return the P521 curve, using the initialization done in init
